@@ -38,7 +38,13 @@ x-airflow-common: &airflow-common
     AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_SECRET}
     AIRFLOW__API__SECRET_KEY: ${AIRFLOW_API_SECRET_KEY}
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+    # @daily = intervalle de données de la veille : le run de minuit le J traite {{ ds }} = J-1
+    # (sinon, en Airflow 3, il traiterait la journée J qui vient seulement de commencer)
+    AIRFLOW__SCHEDULER__CREATE_CRON_DATA_INTERVALS: "true"
     AIRFLOW__DAG_PROCESSOR__REFRESH_INTERVAL: "30"
+    # Sobriété mémoire (machines de formation) : 1 worker uvicorn, 4 tâches Celery en parallèle
+    AIRFLOW__API__WORKERS: "1"
+    AIRFLOW__CELERY__WORKER_CONCURRENCY: "4"
     AIRFLOW_CONFIG: /opt/airflow/config/airflow.cfg
     # Les providers amazon (S3Hook) et postgres sont déjà dans l'image
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-pytest}
@@ -289,7 +295,7 @@ services:
     build: ./api
     environment:
       API_TOKEN: ${MARKETPLACE_API_TOKEN}
-      ORDERS_PER_DAY: ${ORDERS_PER_DAY:-500}
+      ORDERS_PER_DAY: ${ORDERS_PER_DAY:-1000}
     ports:
       - "5000:5000"
     healthcheck:
