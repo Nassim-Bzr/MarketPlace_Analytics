@@ -1,0 +1,34 @@
+
+services:
+  minio:
+    image: cgr.dev/chainguard/minio:latest
+    container_name: minio
+    user: "0:0"
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    restart: unless-stopped
+
+  python-spark:
+    image: quay.io/jupyter/pyspark-notebook:latest
+    container_name: python-spark
+    environment:
+      JUPYTER_TOKEN: datalake123
+    ports:
+      - "8888:8888"
+      - "4040:4040"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+      - ./data:/home/jovyan/data
+    working_dir: /home/jovyan/work
+    command: start-notebook.py --IdentityProvider.token=datalake123
+    restart: unless-stopped
+
+volumes:
+  minio_data:
