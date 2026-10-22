@@ -558,4 +558,4 @@ docker compose down -v                                         # ⚠️ reset co
 
 Plan de travail détaillé (étapes, répartition, planning) : [docs/PLAN.md](docs/PLAN.md).
 
-Supports de soutenance (PowerPoint, texte oral et répartition sur 10 minutes) : [docs/oral/](docs/oral/README.md).
+Supports de soutenance (PowerPoint, texte oral et répartition sur environ 12 min 30, maximum 15 minutes) : [docs/oral/](docs/oral/README.md).

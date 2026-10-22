@@ -2,7 +2,7 @@
 
 Équipe : Medy, Rayan et Nassim.
 
-Format proposé : 9 slides, 10 minutes au total, avec environ 3 min 20 par personne. Les durées comprennent les transitions et une courte démonstration éventuelle. Ce sont des repères à ajuster après une répétition.
+Format proposé : 9 slides, environ 12 min 30 au total, avec environ 4 min 10 par personne. La limite annoncée par le groupe est de 15 minutes. Les durées comprennent les transitions et une courte démonstration éventuelle. Ce sont des repères à ajuster après une répétition.
 
 ## Le projet, simplement
 
@@ -64,7 +64,7 @@ Les buckets MinIO silver et gold existent, mais restent vides. Il ne faut donc p
 
 ## Consignes trouvées
 
-Aucune consigne spécifique de soutenance n’a été trouvée dans le HTML, le README ou le plan présents dans le dossier. Le sujet renvoie à une Documentation commune qui n’est pas disponible ici. On retient donc les 10 minutes annoncées dans votre échange, en supposant que les questions viennent après.
+Aucune consigne spécifique de soutenance n’a été trouvée dans le HTML, le README ou le plan présents dans le dossier. Le sujet renvoie à une Documentation commune qui n’est pas disponible ici. Le groupe a précisé une limite de 15 minutes. On vise environ 12 min 30 pour garder une marge, en supposant que les questions viennent après.
 
 ## Répartition de la parole
 
@@ -72,23 +72,23 @@ Cette répartition concerne la présentation. Elle ne prétend pas décrire qui 
 
 | Intervenant | Slides | Partie | Temps total |
 |---|---|---|---|
-| Medy | 1 à 3 | Besoin, rôle des outils, données fictives | 3 min 20 |
-| Rayan | 4 à 6 | Médaillon, modèle SQL, relances sans doublons | 3 min 20 |
-| Nassim | 7 à 9 | Airflow, résultats, bilan | 3 min 20 |
+| Medy | 1 à 3 | Besoin, rôle des outils, données fictives | 4 min 10 |
+| Rayan | 4 à 6 | Médaillon, modèle SQL, relances sans doublons | 4 min 10 |
+| Nassim | 7 à 9 | Airflow, résultats, bilan | 4 min 10 |
 
 ## Repères de temps
 
 | Slide | Titre | Qui ? | Durée | Créneau |
 |---|---|---|---|---|
-| 1 | MarketPlace Analytics | Medy | 0 min 45 s | 0:00 à 0:45 |
-| 2 | Le rôle des outils | Medy | 1 min 15 s | 0:45 à 2:00 |
-| 3 | Nos données fictives | Medy | 1 min 20 s | 2:00 à 3:20 |
-| 4 | Bronze, Silver et Gold | Rayan | 1 min 10 s | 3:20 à 4:30 |
-| 5 | Les tables dans PostgreSQL | Rayan | 1 min 05 s | 4:30 à 5:35 |
-| 6 | Les relances sans doublons | Rayan | 1 min 05 s | 5:35 à 6:40 |
-| 7 | L’automatisation avec Airflow | Nassim | 1 min 05 s | 6:40 à 7:45 |
-| 8 | Les résultats sur notre jeu fictif | Nassim | 1 min 20 s | 7:45 à 9:05 |
-| 9 | Bilan et suite du projet | Nassim | 0 min 55 s | 9:05 à 10:00 |
+| 1 | MarketPlace Analytics | Medy | 1 min 00 s | 0:00 à 1:00 |
+| 2 | Le rôle des outils | Medy | 1 min 35 s | 1:00 à 2:35 |
+| 3 | Nos données fictives | Medy | 1 min 35 s | 2:35 à 4:10 |
+| 4 | Bronze, Silver et Gold | Rayan | 1 min 30 s | 4:10 à 5:40 |
+| 5 | Les tables dans PostgreSQL | Rayan | 1 min 20 s | 5:40 à 7:00 |
+| 6 | Les relances sans doublons | Rayan | 1 min 20 s | 7:00 à 8:20 |
+| 7 | L’automatisation avec Airflow | Nassim | 1 min 30 s | 8:20 à 9:50 |
+| 8 | Les résultats sur notre jeu fictif | Nassim | 1 min 40 s | 9:50 à 11:30 |
+| 9 | Bilan et suite du projet | Nassim | 1 min 00 s | 11:30 à 12:30 |
 
 ## Texte oral, slide par slide
 
@@ -96,79 +96,97 @@ Le texte sert de base. À la répétition, gardez les idées et reformulez les p
 
 ### Slide 1 : MarketPlace Analytics
 
-Medy, environ 0 min 45 s.
+Medy, environ 1 min 00 s.
 
 Bonjour, on va vous présenter notre projet MarketPlace Analytics. On est partis du cas de Maelys, une marketplace fictive qui met en relation des vendeurs et des clients. Dans le scénario du sujet, l’analyste récupère les commandes à la main pour faire ses rapports Excel. L’idée de notre projet, c’est d’automatiser ce travail et d’obtenir des chiffres faciles à consulter : le chiffre d’affaires, les commissions et les meilleurs vendeurs. On va vous montrer d’où viennent les données, comment on les traite et ce qu’on obtient à la fin.
 
 Transition à dire : Je commence par le rôle des outils, parce qu’on en utilise plusieurs, mais chacun a une fonction assez simple.
 
+À montrer ou à expliquer tranquillement : Exemple à expliquer : on veut pouvoir consulter les ventes du jour sans refaire un export Excel. La commission de 12 % représente la part de la marketplace sur une vente.
+
 ### Slide 2 : Le rôle des outils
 
-Medy, environ 1 min 15 s.
+Medy, environ 1 min 35 s.
 
 Concrètement, Faker sert à inventer nos données : des noms de vendeurs, des clients et des commandes. Flask les rend accessibles par une API, un peu comme si on interrogeait le backoffice d’un vrai site. Airflow s’occupe de lancer les étapes dans le bon ordre. Il appelle l’API et dépose les commandes dans MinIO. MinIO conserve ces données sous forme de fichiers JSON. Ensuite, PostgreSQL les range dans des tables et calcule les indicateurs. Metabase lit les tables pour afficher les graphiques. Docker Compose permet de démarrer tous ces services avec la même configuration. Le parcours des données reste donc assez simple : une source, une copie brute, des tables préparées et des graphiques. On appelle ça un pipeline, c’est-à-dire une suite de traitements qui s’enchaînent.
 
 Transition à dire : Pour que ce pipeline ait quelque chose à traiter, on a d’abord besoin d’une source de données cohérente.
 
+À montrer ou à expliquer tranquillement : En montrant les outils : Docker lance les services sur notre PC. Airflow lance les traitements. MinIO garde les fichiers bruts. PostgreSQL prépare les tables et Metabase les affiche.
+
 ### Slide 3 : Nos données fictives
 
-Medy, environ 1 min 20 s.
+Medy, environ 1 min 35 s.
 
 On utilise Faker en français pour créer les informations fictives. Mais Faker ne fait pas tout : le code choisit aussi les produits, les quantités, les prix et les statuts des commandes. On a 200 vendeurs, 2 000 produits et 5 000 clients. Les commandes pointent vers des éléments qui existent déjà, et le produit correspond bien au vendeur. Ça évite de générer des lignes au hasard qui seraient impossibles à relier ensuite. Autre point important : on fixe une graine de génération. Pour les commandes, elle dépend de la date demandée. Si on redemande la même journée, on retrouve donc les mêmes commandes avec la même configuration. C’est utile pour tester les relances. Par exemple, pour une commande de deux articles à 25 euros, le total est de 50 euros. Avec le taux de 12 % du sujet, la commission vaut 6 euros.
 
 Transition à dire : Je laisse maintenant Rayan expliquer comment on conserve ces données et comment on les organise.
 
+À montrer ou à expliquer tranquillement : Exemple à expliquer : une commande choisit un produit et un client qui existent déjà. Faker aide à créer des noms et des adresses plausibles, tandis que notre code assure les liens entre les données.
+
 ### Slide 4 : Bronze, Silver et Gold
 
-Rayan, environ 1 min 10 s.
+Rayan, environ 1 min 30 s.
 
 On a repris le principe de l’architecture médaillon : on passe progressivement des données brutes à des données utilisables pour l’analyse. Bronze, c’est la copie brute. Dans MinIO, on classe les fichiers par type de données puis par date, par exemple orders, puis dt égal à une date. On peut ainsi retrouver une journée précise. Silver correspond ici aux tables PostgreSQL où on type les données et où on les organise. Gold contient les agrégations, comme le chiffre d’affaires par jour ou par vendeur. Il faut préciser un choix de notre version : seule Bronze contient des fichiers dans MinIO. Silver et Gold sont dans PostgreSQL. Les deux buckets MinIO existent, mais ils ne sont pas alimentés. Une évolution possible serait d’y exporter les données préparées, par exemple en Parquet.
 
 Transition à dire : Dans PostgreSQL, on a aussi séparé les tables selon leur rôle.
 
+À montrer ou à expliquer tranquillement : Exemple à expliquer : pour une journée, on conserve le JSON original dans Bronze. On structure ensuite ces données dans PostgreSQL, puis on calcule les indicateurs. Ici, les buckets MinIO Silver et Gold restent vides.
+
 ### Slide 5 : Les tables dans PostgreSQL
 
-Rayan, environ 1 min 05 s.
+Rayan, environ 1 min 20 s.
 
 On utilise trois schémas dans PostgreSQL, c’est-à-dire trois espaces pour ranger les tables. Staging reçoit les données relues depuis MinIO. Dwh contient le modèle en étoile. Au centre, fact_orders contient une ligne par commande, avec la quantité, le montant, le statut et la commission. Autour, les quatre dimensions décrivent le vendeur, le produit, le client et la date. Les identifiants permettent de faire les liens. Les clés étrangères empêchent aussi de charger une commande qui référence une dimension absente. Enfin, le schéma analytics contient les résumés que Metabase utilise. Cette séparation nous permet de garder les détails des commandes tout en fournissant des tables simples à interroger pour les graphiques.
 
 Transition à dire : Mais bien ranger les données ne suffit pas : il faut aussi pouvoir relancer le traitement sans les compter deux fois.
 
+À montrer ou à expliquer tranquillement : Exemple à expliquer : pour comparer les ventes par catégorie, on part du montant dans fact_orders et on retrouve la catégorie en passant par la dimension produit.
+
 ### Slide 6 : Les relances sans doublons
 
-Rayan, environ 1 min 05 s.
+Rayan, environ 1 min 20 s.
 
 Ce comportement s’appelle l’idempotence. L’idée est simple : si on relance une journée, on ne veut pas doubler ses commandes. Dans MinIO, on réécrit le même fichier au même emplacement. Dans PostgreSQL, on supprime d’abord les lignes de la date choisie, puis on insère celles qu’on vient de préparer. On fait les deux opérations dans une transaction. Si l’insertion échoue, la base peut annuler la suppression au lieu de laisser une journée vide. Les autres dates restent en place. On a aussi un test d’intégration qui exécute deux fois la transformation et compare le résultat. Ça sert quand on corrige un traitement ou quand on veut recharger une journée passée, sans fausser les indicateurs du dashboard.
 
 Transition à dire : Nassim va maintenant présenter comment Airflow enchaîne ces étapes et ce qu’on a vérifié au final.
 
+À montrer ou à expliquer tranquillement : Exemple à expliquer : si on relance le 20 octobre, on remplace les lignes de cette date. On ne rajoute pas une deuxième fois les mêmes commandes.
+
 ### Slide 7 : L’automatisation avec Airflow
 
-Nassim, environ 1 min 05 s.
+Nassim, environ 1 min 30 s.
 
 Dans Airflow, un DAG décrit les tâches et leurs dépendances. On en a trois. Le premier met à jour les dimensions. Le deuxième traite les commandes d’une journée : appel de l’API, écriture dans Bronze, relecture du fichier, chargement dans staging et transformation vers la table de faits. Le troisième recalcule les agrégations. Il démarre quand le DAG des commandes signale que les faits sont à jour, grâce à un Asset Airflow. Pour appeler l’API, on a un Hook qui centralise l’authentification et les requêtes. Les identifiants viennent des Connections Airflow configurées par l’environnement. On prévoit aussi des nouvelles tentatives en cas d’erreur temporaire. Dans l’interface, on peut vérifier quelles tâches ont réussi et consulter leurs logs si quelque chose bloque.
 
 Transition à dire : Sur notre installation, on a ensuite chargé un historique pour vérifier le résultat de bout en bout.
 
+À montrer ou à expliquer tranquillement : Sur la capture Airflow : les trois lignes correspondent aux trois DAGs. Les coches vertes indiquent une dernière exécution réussie. Les agrégations attendent la mise à jour des commandes via un Asset.
+
 ### Slide 8 : Les résultats sur notre jeu fictif
 
-Nassim, environ 1 min 20 s.
+Nassim, environ 1 min 40 s.
 
 On a chargé 30 jours, du 21 septembre au 20 octobre 2026, soit 31 643 commandes. Les 24 tests passent, dont le test d’idempotence. On a également comparé le chiffre d’affaires de la table de faits avec celui des trois tables d’agrégation : on retrouve le même total, environ 5,16 millions d’euros. Ce sont bien des données fictives. Pour le calcul du CA, notre règle exclut les commandes annulées ou remboursées. Dans Metabase, Executive Summary affiche notamment le CA, le panier moyen et les commissions. Le dashboard Top Sellers permet de comparer les vendeurs. Ici, la courbe reprend les sept dernières journées chargées dans notre installation.
 
 Transition à dire : Pour terminer, voilà ce qu’on retient du projet et ce qu’il reste à améliorer.
 
-Pendant cette slide : Si les onglets sont prêts, montrer Executive Summary pendant 15 à 20 secondes. Pointer la courbe du CA et les commissions. Revenir ensuite à la slide 9. Si la démo ne répond pas immédiatement, rester sur le graphique de cette slide.
+Pendant cette slide : montrer la capture intégrée. Si les onglets sont prêts, ouvrir Executive Summary pendant 30 à 40 secondes. Pointer la courbe du CA et les commissions, puis revenir à la slide 9. Si la démo ne répond pas immédiatement, rester sur la capture.
+
+À montrer ou à expliquer tranquillement : Sur la capture Metabase : la courbe montre les variations du CA et les barres comparent les vendeurs. La capture date du 22 octobre. Le bilan chiffré de cette slide reste le chargement vérifié le 21 octobre. Si les services répondent, ouvrir Executive Summary pendant 30 à 40 secondes et montrer aussi les commissions.
 
 ### Slide 9 : Bilan et suite du projet
 
-Nassim, environ 0 min 55 s.
+Nassim, environ 1 min 00 s.
 
 Au final, on a un parcours complet qui fonctionne, depuis l’API jusqu’aux dashboards. Les données brutes restent dans MinIO, les tables PostgreSQL structurent les commandes et Metabase permet de consulter les résultats. On peut recharger une date sans multiplier les lignes. Ce qu’on retient surtout, c’est l’importance de garder des données cohérentes et de vérifier les calculs à chaque étape. Il reste des améliorations : ajouter les contrôles qualité configurables, détecter les anomalies commerciales et alimenter les buckets Silver et Gold. La supervision Prometheus et Grafana fait aussi partie des bonus qu’on n’a pas réalisés dans cette version. Merci, on peut maintenant répondre à vos questions.
 
+À montrer ou à expliquer tranquillement : Pour conclure avec vos mots : le parcours fonctionne de bout en bout, mais les contrôles qualité et les exports Silver et Gold dans MinIO restent des améliorations à faire.
+
 ## Petite démonstration, si vous en faites une
 
-Le créneau de la slide 8 prévoit 15 à 20 secondes de démonstration. Pour tenir en 10 minutes, montrez seulement Executive Summary pendant l’oral. Les autres onglets peuvent servir pendant les questions.
+Le créneau de la slide 8 prévoit 30 à 40 secondes de démonstration, incluses dans les 12 min 30. Les captures Airflow et Metabase intégrées au PowerPoint permettent aussi de présenter le projet sans dépendre du navigateur. Les autres onglets peuvent servir pendant les questions.
 
 1. Préparez la connexion Metabase avant de commencer.
 2. Sur Executive Summary, pointez le chiffre d’affaires, la courbe et les commissions.
@@ -243,4 +261,4 @@ Le sujet demande un MVP court et les transformations SQL restent simples à ce v
 
 Cahier des charges HTML, README.md, docs/PLAN.md, docker-compose.yml, api/app.py, init-db/schema.sql, DAGs et SQL du dépôt, plugins/marketplace_io.py, plugins/hooks/marketplace_api_hook.py et tests du projet.
 
-Les résultats chiffrés viennent des requêtes exécutées sur l’installation locale le 21 octobre 2026 et du journal des tests. Le graphique du PowerPoint reprend les sept derniers jours de analytics.daily_summary. Les trois intervenants totalisent 10 minutes prévues, avec des durées indicatives.
+Les résultats chiffrés viennent des requêtes exécutées sur l’installation locale le 21 octobre 2026 et du journal des tests. Le graphique du PowerPoint reprend les sept derniers jours de analytics.daily_summary. Les captures Airflow et Metabase ont été prises le 22 octobre 2026. Les trois intervenants totalisent environ 12 min 30, avec des durées indicatives et une limite de 15 minutes.
